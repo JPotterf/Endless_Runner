@@ -17,8 +17,13 @@ public class HealthComponent : MonoBehaviour
     {
         if(curHealth <= 0)
         {
-            curHealth = maxHealth;
-            gameObject.SetActive(false);
+            if (gameObject.tag == "Enemy")
+            {
+                GameController.EnemyCount--;
+                curHealth = maxHealth;
+                gameObject.SetActive(false);
+            }
+            
         }
     }
 
