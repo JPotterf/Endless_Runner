@@ -23,31 +23,34 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.touchCount > 0)
+        if (!GameController.GamePaused)
         {
-            touch = Input.GetTouch(0);
-            if (!emptyCharge)
+            if (Input.touchCount > 0)
             {
-                lightObj.SetActive(true);
+                touch = Input.GetTouch(0);
+                if (!emptyCharge)
+                {
+                    lightObj.SetActive(true);
+                }
+                else
+                {
+                    lightObj.SetActive(false);
+                }
+
+                UIController.instance.usingCharge = true;
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    rotY = Quaternion.Euler(0f, touch.deltaPosition.x * speedMod, 0f);
+                    transform.rotation = rotY * transform.rotation;
+                }
+
             }
             else
             {
                 lightObj.SetActive(false);
+                UIController.instance.usingCharge = false;
             }
-
-            UIController.instance.usingCharge = true; 
-
-            if(touch.phase == TouchPhase.Moved)
-            {
-                rotY = Quaternion.Euler(0f, touch.deltaPosition.x * speedMod, 0f);
-                transform.rotation = rotY * transform.rotation;
-            }
-
-        }
-        else
-        {
-            lightObj.SetActive(false);
-            UIController.instance.usingCharge = false;
-        }
+        }  
     }
 }

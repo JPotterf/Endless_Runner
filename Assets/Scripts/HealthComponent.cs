@@ -23,6 +23,12 @@ public class HealthComponent : MonoBehaviour
                 curHealth = maxHealth;
                 gameObject.SetActive(false);
             }
+
+            if(gameObject.tag == "Player")
+            {
+                curHealth = maxHealth;
+                UIController.instance.EndGame();
+            }
             
         }
     }
